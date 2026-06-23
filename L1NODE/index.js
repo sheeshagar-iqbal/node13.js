@@ -1,3 +1,4 @@
+//    req ,res method and propertice
 const express =require('express')
 const app= express()
 
@@ -55,3 +56,23 @@ app.get('/error',(req,res)=>{
 })
 
 // 200-ok 201created 403 -forbidden 500 inter serval error 503 service unavailable 504 gateway timeout 
+
+app.get('/check',(req,res)=>{
+  res.set('name','iqbal')
+  console.log(res.get('name'))
+  res.send('header set')
+})
+
+
+app.post('/about',(req,res)=>{
+  res.send(req.body)
+})
+
+
+app.get('/info',(req,res)=>{
+  // res.send(req.hostname)
+  // res.send(req.ip)
+  // res.send(req.method)
+  res.send(req.secure)
+  // res.send(req.protocol)
+})

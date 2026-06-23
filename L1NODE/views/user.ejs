@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><%= title%></title>
 </head>
 <body>
-    <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati omnis quaerat assumenda, iste repellat corporis voluptatibus debitis dolore itaque similique molestias quo tenetur aliquam excepturi ad perferendis enim velit eveniet.</h1>
+    <h1><%= message%></h1>
+    <% if(title) { %>
+    <p><%= title%></p>
+    <%}else{%>
+        <span>not have</span>
+        <%}%>
 </body>
 </html>
