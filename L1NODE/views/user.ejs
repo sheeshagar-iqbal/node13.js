@@ -12,5 +12,24 @@
     <%}else{%>
         <span>not have</span>
         <%}%>
+
+
+        <ul>
+            <% items.forEach(item =>{ %>
+
+                    <li> <%= item  %></li> 
+           <% })  %>
+        </ul>
+
+        <table border='2',width=200px'>
+            <% user.forEach(item =>{ %>
+
+            <tr>
+                <td><%= item.name  %></td>
+                <td><%= item.age  %></td>
+            </tr>
+           <% })  %>
+
+        </table>
 </body>
 </html>
