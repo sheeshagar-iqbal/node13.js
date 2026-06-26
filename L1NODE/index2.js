@@ -15,6 +15,7 @@ app.use(express.urlencoded({extended:false}))
 
 //  for static file
 app.use (express.static('public'))
+app.use(express.static('public'))
 
 app.get('/',(req,res)=>{
     res.send('hi')
