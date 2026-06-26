@@ -1,4 +1,5 @@
-const mongoose =require('mongoose')
+// const mongoose =require('mongoose')
+import mongoose from "mongoose";
 
 const contactschema= mongoose.Schema({
     first_name:{
@@ -17,5 +18,6 @@ const contactschema= mongoose.Schema({
             type:String
     }
 })
-const contact =mongoose.model('contact',contactschema);
-module.exports =contact
+const Contact =mongoose.model('contact',contactschema);
+// module.exports =contact
+export  default Contact 

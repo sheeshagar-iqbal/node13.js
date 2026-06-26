@@ -26,10 +26,11 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <% let src=1%>
                     <% contact.forEach(item=>{  %>
 
                     <tr>
-                      <td>1</td>
+                      <td><%=src++%></td>
                       <td><%= item.first_name%></td>
                       <td><%= item.last_name%></td>
                       <td><%= item.email%></td>
