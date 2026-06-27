@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import Contact from '../models/contacts.model.js'
 
 export const getContacts=async (req,res)=>{
@@ -7,6 +8,11 @@ export const getContacts=async (req,res)=>{
 }
 
 export const showContact =async(req,res)=>{
+        var paramId = mongoose.Types.ObjectId.isValid(req.params.id)
+    if(!paramId){
+         return res.render('404',{message :'invalid id'})
+    }    
+
     // const contact = await Contact.findOne({_id:req.params.id})
     const contact = await Contact.findById(req.params.id)
     // res.json(contact)
@@ -33,7 +39,14 @@ export const addContact=async(req,res)=>{
 
 }
 
-export const updatecontactpage=async (req,res)=>{
+export const updatecontactpage=async (req,res)=>{     
+    var paramId = mongoose.Types.ObjectId.isValid(req.params.id)
+    if(!paramId){
+         return res.render('404',{message :'invalid id'})
+    } 
+
+    // console.log("Original URL:", req.originalUrl);
+    // console.log("ID:", req.params.id);
      const contact = await Contact.findById(req.params.id)
     res.render('update-contact',{contact})
 
@@ -41,12 +54,20 @@ export const updatecontactpage=async (req,res)=>{
 }
 
 export const updateContact=async(req,res)=>{
+    var paramId = mongoose.Types.ObjectId.isValid(req.params.id)
+    if(!paramId){
+         return res.render('404',{message :'invalid id'})
+    } 
      await Contact.findByIdAndUpdate(req.params.id , req.body)
      res.redirect('/')
 
 }
 
 export const deleteContact= async(req,res)=>{
+    var paramId = mongoose.Types.ObjectId.isValid(req.params.id)
+    if(!paramId){
+         return res.render('404',{message :'invalid id'})
+    } 
      await Contact.findByIdAndDelete(req.params.id)
      res.redirect('/')
 

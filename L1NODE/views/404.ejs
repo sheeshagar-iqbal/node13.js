@@ -1,0 +1,23 @@
+<%- include('partials/header.ejs') -%>
+
+
+    <!-- content -->
+    <main class="py-5">
+      <div class="container">
+        <div class="row justify-content-md-center">
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-header card-title">
+                <strong>400 error</strong>
+              </div>
+           <% if(message) {  %>
+                    <h1><%=message%></h1>
+          <% } else{ %>
+                    <h1> page not found</h1>
+         <% }  %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+<%- include('partials/footer.ejs') -%>

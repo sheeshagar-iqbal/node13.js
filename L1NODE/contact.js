@@ -14,7 +14,7 @@ app.use(express.static('public'))
 app.use('/',contactrouter)
 connectDB()
 
-app.listen(4000,()=>{
+app.listen(process.env.port,()=>{
     console.log('4000 port contacted sucessfully');
     
 })

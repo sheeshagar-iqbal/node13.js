@@ -1,6 +1,8 @@
 import mongoose  from 'mongoose'
+import dotenv from 'dotenv'
+dotenv.config()
 export const connectDB =()=>{
-    mongoose.connect('mongodb://127.0.0.1:27017/contact-app')
+    mongoose.connect(process.env.mongourl)
 .then(()=> console.log('database contacted sucessfully')
 )
 }
