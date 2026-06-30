@@ -1,24 +1,3 @@
-// console.log('xyz')
-// let a=2
-// let b=4
-// console.log(a+b);
-
-// const demo =require('./first')
-
-// console.log(demo);
-
-// demo.working()
-
-
-// const {add,sub,div}= require('./second.js')
-
-// console.log(add(4,2));
-
-// console.log(sub(4,2));
-
-// console.log(div(4,2));
-
-
 const http = require('http')
 
 let server =http.createServer((req,res)=>{
@@ -30,18 +9,30 @@ let server =http.createServer((req,res)=>{
     // res.end()
     if (req.url=='/'){
         res.write('<h1>Home page<h1/>')
+        console.log(req.method);
         res.end()
+        
     }
     else if (req.url=='/about'){
         res.write('<h1>About page<h1/>')
         res.end()
     }
-    else if (req.url=='/service'){
-        res.write('<h1>Service page<h1/>')
+    else if (req.url=='/service' &&    req.method =="POST"){
+        let store=''
+        req.on ('data',(item)=>{
+            store+=item
+        })
+        req.on('end',()=>{
+            console.log(store);
+            
+        })
+        
         res.end()
     }
-    else if (req.url=='/contact'){
+    else if (req.url=='/contact' && req.method =='POST'){
         res.write('<h1>Contact page<h1/>')
+        console.log('success');
+     
         res.end()
     }
     else if (req.url=='/view'){
@@ -55,4 +46,4 @@ let server =http.createServer((req,res)=>{
 })
 
 
-server.listen(4000,()=>console.log('server runing op port 3000'))
+server.listen(4000,()=>console.log('server runing op port 4000'))

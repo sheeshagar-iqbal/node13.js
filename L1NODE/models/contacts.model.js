@@ -1,5 +1,6 @@
 // const mongoose =require('mongoose')
 import mongoose from "mongoose";
+import mongoosePaginat from 'mongoose-paginate-v2'
 
 const contactschema= mongoose.Schema({
     first_name:{
@@ -18,6 +19,7 @@ const contactschema= mongoose.Schema({
             type:String
     }
 })
+contactschema.plugin(mongoosePaginat)
 const Contact =mongoose.model('contact',contactschema);
 // module.exports =contact
 export  default Contact 
