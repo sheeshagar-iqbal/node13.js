@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 import Contact from "../models/contacts.model.js";
+import {body,validationResult} from'express-validator';
+
+
 
 export const getContacts = async (req, res) => {
   try {
@@ -105,6 +108,32 @@ export const deleteContact = async (req, res) => {
     const contact = await Contact.findByIdAndDelete(req.params.id);
     if (!contact) return res.render("404", { message: "contact not found" });
     res.redirect("/");
+  } catch (error) {
+    res.render("500", { message: error });
+  }
+};
+
+export const getvalidation = async (req, res) => {
+
+
+  try {
+      res.render('valitor',{msg:null})
+  } catch (error) {
+    res.render("500", { message: error });
+  }
+};
+
+export const postvalidation = async (req, res) => {
+    try {
+  const result = validationResult(req)
+  if (result.isEmpty()){
+   return res.send(req.body)
+  }
+
+  // res.send(result.errors[0].msg)
+  res.render('valitor' ,{msg:result.errors[0].msg})
+
+   
   } catch (error) {
     res.render("500", { message: error });
   }
