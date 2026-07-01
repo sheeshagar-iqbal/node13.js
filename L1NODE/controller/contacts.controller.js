@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import Contact from "../models/contacts.model.js";
 import {body,validationResult} from'express-validator';
-
-
+// import multer  from 'multer' ;
+// const upload = multer({ dest: 'uploads/' });
+// import path from 'path'
 
 export const getContacts = async (req, res) => {
   try {
@@ -134,6 +135,29 @@ export const postvalidation = async (req, res) => {
   res.render('valitor' ,{msg:result.errors[0].msg})
 
    
+  } catch (error) {
+    res.render("500", { message: error });
+  }
+};
+
+
+
+// multer
+
+export const getprofile = async (req, res) => {
+  try {
+      res.render('multer')
+  } catch (error) {
+    res.render("500", { message: error });
+  }
+};
+export const profile = async (req, res) => {
+    try {
+      if (!req.file  || req.file.length===0){
+        return res.status(400).send(' no file uploaded')
+      }
+      res.send(req.file)
+  //  console.log(req.file, req.body)
   } catch (error) {
     res.render("500", { message: error });
   }

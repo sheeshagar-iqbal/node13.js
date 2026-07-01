@@ -1,8 +1,34 @@
 import express from 'express'
 import Contact from '../models/contacts.model.js'
-import { addContact, addContactPage, deleteContact, getContacts, getvalidation, postvalidation, showContact, updateContact, updatecontactpage } from '../controller/contacts.controller.js'
+import { addContact, addContactPage, deleteContact, getContacts, getprofile, getvalidation, postvalidation, profile, showContact, updateContact, updatecontactpage } from '../controller/contacts.controller.js'
 const router =express.Router()
 import {body,validationResult} from'express-validator'
+
+import multer  from 'multer' 
+import path from 'path';
+import { error } from 'console'
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads')
+  },
+  filename: function (req, file, cb) {
+    const newFileName = Date.now() + path.extname(file.originalname)
+    cb(null, newFileName)
+  }
+})
+const fileFelder = (req,file, cb)=>{
+        if (file.mimetype.startsWith('image/')){
+                cb(null,true)
+        }else{
+            cb(new Error('olny img are allowed'),false)
+        }
+}
+
+const upload = multer({ storage: storage ,limits: { fileSize:1024*1024*1}, // fileFilter:fileFelder
+})
+
+
+
 
 //  password email phone usercity address
 const validationhere=[
@@ -26,6 +52,9 @@ router.post('/update-contact/:id',updateContact )
 router.get('/delete-contact/:id',deleteContact)
 router.get('/validator-contact',getvalidation)
 router.post('/validator-contact',validationhere,postvalidation)
+router.get('/profile',getprofile)
+router.post('/profile',upload.single('avatar'),profile)
+
 
 
 export default router
