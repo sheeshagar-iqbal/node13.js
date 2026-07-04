@@ -8,9 +8,21 @@ import Contact from './models/contacts.model.js'
 import contactrouter from './routes/contact.routes.js'
 import { connectDB } from './config/database.config.js'
 import multer  from 'multer'
+import session from 'express-session'
+
+app.use(session({
+    secret:'apikey',
+     resave: false,
+  saveUninitialized: true,
+  cookie: {maxAge:1000*60*60*24}
+}))
+
 app.set('view engine','ejs')
 app.use(express.urlencoded({extended:false}))
 app.use(express.static('public'))
+
+
+
 app.use('/',contactrouter)
 app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {

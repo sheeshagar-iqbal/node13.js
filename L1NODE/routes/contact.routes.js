@@ -1,9 +1,9 @@
 import express from 'express'
 import Contact from '../models/contacts.model.js'
-import { addContact, addContactPage, deleteContact, getContacts, getprofile, getvalidation, postvalidation, profile, showContact, updateContact, updatecontactpage } from '../controller/contacts.controller.js'
+import { addContact, addContactPage, deleteContact, getContacts, getlogin, getprofile, getsignup, getvalidation, login, logout, postvalidation, profile, showContact, signup, updateContact, updatecontactpage } from '../controller/contacts.controller.js'
 const router =express.Router()
 import {body,validationResult} from'express-validator'
-
+import session from 'express-session'
 import multer  from 'multer' 
 import path from 'path';
 import { error } from 'console'
@@ -40,20 +40,33 @@ const validationhere=[
 
 ]
 
+let checklogin =(req,res ,next)=>{
+  if(req.session.user){
+    next()
+  }else{
+    res.redirect('/getlogin-contact')
+  }
+}
 
 router.get('/',getContacts)
 
 router.get('/show-contact/:id', showContact)
 router.get('/add-contact',addContactPage)
-router.post('/add-contact', addContact)
+router.post('/add-contact',checklogin, addContact)
 
-router.get('/update-contact/:id',updatecontactpage )
-router.post('/update-contact/:id',updateContact )
-router.get('/delete-contact/:id',deleteContact)
+router.get('/update-contact/:id',checklogin,updatecontactpage )
+router.post('/update-contact/:id',checklogin,updateContact )
+router.get('/delete-contact/:id',checklogin,deleteContact)
 router.get('/validator-contact',getvalidation)
 router.post('/validator-contact',validationhere,postvalidation)
 router.get('/profile',getprofile)
 router.post('/profile',upload.single('avatar'),profile)
+router.get('/getlogin-contact',getlogin)
+router.post('/login-contact',login)
+router.get('/getsignup-contact',getsignup)
+router.post('/signup-contact',signup)
+router.get('/logout',logout)
+
 
 
 

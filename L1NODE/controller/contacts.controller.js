@@ -5,6 +5,10 @@ import {body,validationResult} from'express-validator';
 // const upload = multer({ dest: 'uploads/' });
 // import path from 'path'
 
+import User from '../models/user.model.js'
+import bcrypt from 'bcryptjs'
+import session from "express-session";
+
 export const getContacts = async (req, res) => {
   try {
     //  const contact=   await Contact.find()
@@ -158,6 +162,62 @@ export const profile = async (req, res) => {
       }
       res.send(req.file)
   //  console.log(req.file, req.body)
+  } catch (error) {
+    res.render("500", { message: error });
+  }
+};
+
+
+// sign up and login   
+
+export const getlogin = async (req, res) => {
+  try {
+      res.render('login')
+  } catch (error) {
+    res.render("500", { message: error });
+  }
+};
+export const login = async (req, res) => {
+  try {
+      const {email ,password}=req.body
+      const user=await User.findOne({email})
+      if(!user) return res.render("404",{message:"user not foud"})
+        const ishashedpassword =await bcrypt.compare(password,user.password)
+
+      if(!ishashedpassword) return res.render("404",{message:"password not match"})
+        req.session.user= email
+        res.redirect('/')
+  } catch (error) {
+    res.render("500", { message: error });
+  }
+};
+
+export const getsignup = async (req, res) => {
+  try {
+      res.render('signup')
+  } catch (error) {
+    res.render("500", { message: error });
+  }
+};
+
+export const signup = async (req, res) => {
+  try {
+      const {username, email ,password}=req.body
+      const ishashed = await bcrypt.hash(password,10)
+      // res.send({username,ishashed,email})
+      await User.create({username,email,password:ishashed})
+      res.redirect('/getlogin-contact')
+
+  } catch (error) {
+    res.render("500", { message: error });
+  }
+};
+
+
+export const logout = async (req, res) => {
+  try {
+      req.session.destroy()
+      res.redirect("/getlogin-contact")
   } catch (error) {
     res.render("500", { message: error });
   }
