@@ -1,6 +1,34 @@
 import express from 'express'
 import Student from '../models/students.model.js'
 const router =express.Router()
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs'
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './upload')
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + path.extname(file.originalname)
+    cb(null, file.fieldname + '-' + uniqueSuffix)
+  }
+})
+
+const filefilter =(req,file,cb)=>{
+     if(file.mimetype.startsWith("image/")){
+          cb(null,true)
+     }else{
+          cb(new Error ('only image are allowed',false))
+     }
+}
+const upload = multer({
+     storage:storage,
+     fileFilter:filefilter,
+     limits: {
+          fileSize:1024*1024*3
+     }
+})
 
 // all studentd
 router.get('/', async (req,res)=>{
@@ -25,9 +53,14 @@ router.get('/:id', async (req,res)=>{
 }) 
 
 // add new student
-router.post('/', async (req,res)=>{
+router.post('/',upload.single('profile_pic'), async (req,res)=>{
            try {
-              const newstudent = await Student.create(req.body)
+          //     const newstudent = await Student.create(req.body)
+          const student =new Student(req.body)
+          if(req.file){
+               student.profile_pic=req.file.filename
+          }
+          const newstudent = await student.save()
               res.status(201).json(newstudent)
            } catch (error) {
                 res.status(400).json({message:error.message})
@@ -36,14 +69,38 @@ router.post('/', async (req,res)=>{
 
 
 // udeate student
-router.put('/:id', async (req,res)=>{
+router.put('/:id',upload.single('profile_pic'), async (req,res)=>{
            try {
-             const updatestudent = await Student.findByIdAndUpdate(req.params.id,req.body,{new:true})
+                    const existstudents = await Student.findById(req.params.id)
+                    if(!existstudents){
+                         if(req.file.filename){
+                               const filepath = path.join('./upload',req.file.filename)
+                         fs.unlink(filepath,(err)=>{
+                                   if(err) console.log('failed to delete',err.message);
+                              })
+
+                         }
+                          return res.status(404).json({message:'student not found'})
+                    }
+
+
+                    if(req.file){
+                         if (existstudents.profile_pic){
+                         const filepath = path.join('./upload',existstudents.profile_pic)
+                         fs.unlink(filepath,(err)=>{
+                                   if(err) console.log('failed to delete',err.message);
+                              })
+                    }
+                    req.body.profile_pic =req.file.filename
+                    }
+
+
+             const updatestudent = await Student.findByIdAndUpdate(req.params.id,req.body,{returnDocument: "after"})
                if(!updatestudent) return res.status(404).json({message:'student not found'})
 
               res.status(201).json(updatestudent)
            } catch (error) {
-                res.status(400).json({message:error.message})
+                res.status(500).json({message:error.message})
            }
 }) 
 
@@ -52,8 +109,16 @@ router.put('/:id', async (req,res)=>{
 router.delete('/:id', async (req,res)=>{
            try {
               const deletestudent = await Student.findByIdAndDelete(req.params.id)
+             
                if(!deletestudent) return res.status(404).json({message:'student not found'})
+                         if(deletestudent.profile_pic){
+                              const filepath =path.join('./upload',deletestudent.profile_pic)
+                              fs.unlink(filepath,(err)=>{
+                                   if(err) console.log('failed to delete',err.message);
+                                   
 
+                              })
+                         }
               res.status(201).json({message:"student delete"})
            } catch (error) {
                 res.status(500).json({message:error.message})
