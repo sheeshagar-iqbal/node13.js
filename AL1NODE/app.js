@@ -17,6 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use("/uploads", express.static(path.join(__dirname, "upload")));
+console.log(path.join(__dirname, "upload"));
 
 app.use('/api/student',studentrouter)
 

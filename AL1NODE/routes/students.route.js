@@ -33,7 +33,15 @@ const upload = multer({
 // all studentd
 router.get('/', async (req,res)=>{
            try {
-                const student = await Student.find()
+               const search = req.query.search?.trim() || ''
+               const query={
+                    $or:[
+                         {first_name:{$regex:search, $options:'i'}},
+                         {last_name:{$regex:search, $options:'i'}}
+                    ]
+               }
+
+                const student = await Student.find(query)
                 res.json(student)
            } catch (error) {
                 res.status(500).json({message:error.message})
