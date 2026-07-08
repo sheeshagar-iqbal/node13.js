@@ -1,13 +1,11 @@
 const express = require('express')
+const controller = require('../controller/studentcontroller')
+const {studentget, studentpost} =controller
 const router =express.Router()
 
-router.get('/',(req,res)=>{
-    res.send('<h1>student page</h1>')
-})
+router.get('/',studentget)
 
-router.post('/data',(req,res)=>{
-    res.send(req.body)
-})
+router.post('/data',studentpost)
 
 router.get('/contact/:number',(req,res)=>{
     res.send(req.params)
