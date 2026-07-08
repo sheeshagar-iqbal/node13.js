@@ -330,4 +330,109 @@ insert into b (b_id, b_age,id) values
 (3,24,1) ;
 
 
-                                    
+--   6 
+
+/*  now  i have create data dase funcation in which i have insert table emmploys */
+select * from employees;
+
+-- text function
+/* now the task is to join the first name and last name */
+/* we use the aliyas to provide the temp. clo. header */
+select concat(first_name ," ",last_name) as 'fullname' from employees;
+/* i need the first col and frist col length*/
+select first_name,length(first_name) from employees;
+
+/* now i need the complate table with extigate  col. provide the len. last name and provide the aliyas and last col lenght */
+select * ,length(last_name) as length from employees;
+
+/* now the task is to apoted the suppart of the first name means i need the three later name text strating sencond number
+*/
+select substr(first_name, 2,3) as substring from employees;
+/* now i need the 2 leter of the first name text from left side */
+select left(first_name,2) from employees;
+
+/* now i need hte two leter form the text from the right side */
+select right(first_name,2) from employees;
+
+/* now i want ot search that onder mysql where the sql is plase*/
+select instr("my sql","sql");
+select locate("sql","my sql");
+/*
+now i wnat the first name in the uppercase */
+select *,upper(first_name) from employees;
+/* similary for lower*/
+select *,lower(first_name) from employees;
+/* now i wnat to remove the unneccer spacing of first name col*/
+select ltrim(first_name) from employees;
+/* for the right side */
+select rtrim(first_name) from employees;
+/* both side*/
+select trim(first_name) from employees;
+/* for convrt ing any text into proper  meas firstleter capital and remening with small
+but proper fun. not sapoted by mysql 4
+now replase mysql , love sql*/
+select replace('mysql is working','mysql','love sql');
+/* 
+
+-- 7
+ /* now  reverse the first col  */
+ 
+ select reverse(first_name) from employees;
+ 
+ -- here over task make the salary lenght equal to 10
+ select lpad(salary,10,0) from employees;
+
+    select pad(salary,10,0) from employees;                                 
+    
+    -- aggragate fun.  this are the fun. which take multiple num. of input row and provide the signle value output
+    
+    select sum(salary) from employees;
+     select max(salary) from employees; 
+     select min(salary) from employees;
+     select avg(salary) from employees; 
+     select count(salary) from employees;
+     
+     
+     -- numeric fun  it is provide the row bis outjput take the n number input row and  frovide the same num. out put  of row
+     -- now we want ro round  the salary clo. till one after the decimal value 
+     select round(salary,1) from employees;
+     
+     -- we will use the floor fun. which bring the data back
+      select floor(salary) from employees;
+     -- we wil luse ceil it bring hte value in the coming side
+      select ceil(salary) from employees;
+      
+      -- 
+       select sqrt(salary) from employees;
+        select power(salary,2) from employees;
+        
+        -- date and time fun
+        -- 
+        select now();
+        select current_time();
+        select current_date();
+        select current_timestamp();
+        select year(now());
+        select year("2020-5-24");
+        
+         select monthname(now());
+          select month(now());
+           select day(now());
+            select dayname(now());
+             select dayofweek(now());
+             
+             -- i want ot add the current add 10 day
+              select date_add(now() ,interval 10 day);
+              select date_sub(now() ,interval 10 day);
+              --- now i wnat to find the bt 2 date
+              select datediff(now() , "2026-7-27");
+              
+              -- now malke any value positive we can use absoule fun
+               select abs(datediff(now() , "2026-7-27"));
+               
+               -- now we are to change the date formet
+               
+               select date_format("2020-02-22",'%d-%m-%y');
+               select date_format("2020-02-22",'%D-%M-%Y');
+               
+               

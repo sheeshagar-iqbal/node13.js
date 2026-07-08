@@ -28,7 +28,7 @@ app.use((error,req,res,next)=>{
         return res.status(500).send(`something went wrong ${error.message}`)
      }
      next()
-})
+}) 
 // app.get('/',(req,res)=>{
 //     res.send('hi')
 // })
