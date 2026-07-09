@@ -1,15 +1,20 @@
 const baseurl = "http://localhost:4000/api/student";
+let currentpage =1;
+let currentsearch =''
 
 // view all student
-async function fetchstudent(search = "") {
-  const res = await fetch(`${baseurl}?search=${encodeURIComponent(search)}`);
+async function fetchstudent(search = "",page =1) {
+  currentpage =page;
+  currentsearch =search
+  const res = await fetch(`${baseurl}?search=${encodeURIComponent(search)}&page=${page}&limit=${4}`);
   const data = await res.json();
   //    console.log((data));
 
+ 
   const tbody = document.getElementById("studentTableBody");
   tbody.innerHTML = "";
   //
-  data.forEach((student) => {
+  data.student.forEach((student) => {
     // console.log(student);
 
     tbody.innerHTML += `
@@ -28,12 +33,50 @@ async function fetchstudent(search = "") {
           </td>
         </tr>
         `;
+
+        
   });
+  renderpagination(data.totalPage)
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  fetchstudent();
-});
+fetchstudent();
+
+
+
+function renderpagination(totalpages){
+    const container = document.getElementById('pagination')
+    container.innerHTML =''
+    // pre button
+     const pre =document.createElement('li')
+      pre.className ='page-item' + (currentpage===1?' disabled':' ')
+      pre.innerHTML =`<a class="page-link",href='#' >previous</a>`
+      pre.addEventListener("click",(e)=>{
+        e.preventDefault()
+        fetchstudent(currentsearch,currentpage-1)
+      })
+      container.appendChild(pre)
+      // number
+    for (let i = 1; i <= totalpages; i++) {
+      const li =document.createElement('li')
+      li.className ='page-item' + (currentpage===i?' active':' ')
+      li.innerHTML =`<a class="page-link",href='#'>${i}</a>`
+      li.addEventListener("click",(e)=>{
+        e.preventDefault()
+        fetchstudent(currentsearch,i)
+      })
+      container.appendChild(li)
+    }
+    // next buutton
+     const next =document.createElement('li')
+      next.className ='page-item' + (currentpage===totalpages?' disabled':' ')
+      next.innerHTML =`<a class="page-link",href='#' >next</a>`
+      next.addEventListener("click",(e)=>{
+        e.preventDefault()
+        fetchstudent(currentsearch,currentpage+1)
+      })
+      container.appendChild(next)
+}
+
 
 async function viewStudent(id) {
   const res = await fetch(`${baseurl}/${id}`);

@@ -436,3 +436,54 @@ select replace('mysql is working','mysql','love sql');
                select date_format("2020-02-22",'%D-%M-%Y');
                
                
+               
+--  clauses
+select * from employees;
+/* we use the clause to define the task under sql statement
+there are bareis type of clauses 
+
+1 where clause : we use to apply the fileter condition under the sql statement 
+now the task is to apoted the salary data with greater than 50000 */
+select * from employees where salary >50000;
+
+/* now the task is to difine the dept. vise  total salary */
+select department ,sum(salary) as totalsalary from employees group by department;
+
+
+/* now i need hte department total salary but total salary is greater than 100000 */
+select department ,sum(salary) as totalsalary from employees group by department having totalsalary>100000 ;
+/* we use the grop by clause to parform the gouping  and we use the hanving clause to parform the filetertion on the applied output */
+
+/* now i need the data is age is > 25 */
+select  * from employees where age >25;
+/* now i wnat the dat with age is > 25 and salary is areni the desc. order  */
+select  * from employees where age >25  order by salary desc;
+
+-- now i need asc. oder
+select  * from employees where age >25  order by salary ;
+
+/* wee use the order by clause to aergve the desc and asc order for desc. rewrite desc and asc. rewrite asc and level  black */
+/* i need the data salary is > 25000 */
+select  * from employees where salary >25000;
+/* adn salary is avger. desc order and we need top 5 row only */
+
+select  * from employees where salary >25000 order by salary desc limit 5;
+
+/* we use the limit clause to restrid the no. of row*/
+-- the q is pre.  but now i need the top 5 row asit of 2 row
+
+select  * from employees where salary >25000 order by salary desc limit 5 offset 2;
+
+/* we use the uffset clause to drop the number of rows form the begin
+the clause sevens way to use 
+from - where -group -having -select -order -limit offset  */
+
+/* now we need the data we shows dept .vies salary and the age of the worker most be > 25 and  where i need the top 3 row  asipion 1 row
+*/
+select department ,sum(salary) as totalsalary 
+from employees 
+where age >25 
+group by department 
+limit 1,3;
+
+
