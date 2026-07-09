@@ -487,3 +487,67 @@ group by department
 limit 1,3;
 
 
+-- 9 
+-- opretor  
+
+/* employee related ti delhi or mumbai  */
+select * from employees where city = 'Delhi' or city ='Mumbai';
+
+-- city = delhi and salary >30k must be satisfied */
+select * from employees where city = 'Delhi' and salary>30000;
+
+-- department form it either finamnce 
+select * from employees where department= 'IT' or department='Finance';
+select * from employees where department in ('it','finance');
+-- department not from it and finance 
+select * from employees where department not in ('it','finance');
+
+-- tell the data in which firstname starts with  p 
+select * from employees where first_name like 'p%';
+-- tell the data in which firstname end  with  a
+select * from employees where first_name like '%a';
+
+-- tell the data in which under firest-name the je comes at the second position 
+select * from employees where first_name like '_e%';
+
+-- tell the data in which length of first _name is 5
+select * from employees where first_name like '_____';
+
+select * from employees where length(first_name) =5;
+
+-- first_name start with p or n 
+-- department  len is 2
+
+select * from employees where length(department) =2 and  (first_name like 'p%' or first_name like 'n%');
+
+select * from employees where department like '__' and  (first_name like 'p%' or first_name like 'n%');
+
+-- data in which age exist bt 20 an d 25
+
+select * from employees where  age >=20 and age<=25;
+select * from employees where  age between 20 and 25;
+
+
+--  null is exist in department   / check whether null exists in department or not   (notnull 0 isnull 1 
+
+select *,isnull(department) from employees;
+-- tell the data we show department vias total salary and total salary most be > than 100000 and  department  
+ -- must be areg. desc. order and we need the department either which start with i ,h,f,b,s  need the output from 2 row 
+ 
+ select department ,sum(salary) from employees 
+ where department like 'i%' or department like 'h%' or department like 'f%' or department like 'b%' or department like 's%'
+ group by department 
+ having sum(salary)>100000  
+ order by department desc 
+ limit 1,1;
+ 
+ 
+ 
+
+
+
+
+
+
+
+
