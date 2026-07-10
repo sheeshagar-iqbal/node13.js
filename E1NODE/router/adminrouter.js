@@ -1,9 +1,9 @@
 const express = require('express')
+const { userget, userpost } = require('../controller/usercontroller')
 const router =express.Router()
 
-router.get('/',(req,res)=>{
-    res.send('<h1>admin page</h1>')
-})
+router.get('/',userget)
+router.get('/',userpost)
 
 
 
