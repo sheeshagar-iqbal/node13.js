@@ -113,6 +113,19 @@ use practice;
  4- data indegraity control( if the  col me set than it will be unique before and after trasiton
  5- acid propertice
  
+ 
+ Property	Meaning
+A – Atomicity	All or Nothing
+C – Consistency	Database remains valid
+I – Isolation	Transactions don't interfere
+D – Durability	Committed data is permanent
+
+Atomicity: Cash is dispensed and your account is debited. If either step fails, neither happens.
+Consistency: Your account balance remains correct after the transaction.
+Isolation: Other transactions on your account don't see a half-completed withdrawal.
+Durability: Once the withdrawal is successful, the updated balance is permanently recorded, even if the bank's server crashes afterward.
+
+
  dbms con. are 
  1- sql and any other lang. used to mange the data
  2- tabluar or any other format
@@ -513,18 +526,16 @@ select * from employees where first_name like '_e%';
 -- tell the data in which length of first _name is 5
 select * from employees where first_name like '_____';
 
-select * from employees where length(first_name) =5;
 
 -- first_name start with p or n 
 -- department  len is 2
 
-select * from employees where length(department) =2 and  (first_name like 'p%' or first_name like 'n%');
 
 select * from employees where department like '__' and  (first_name like 'p%' or first_name like 'n%');
 
 -- data in which age exist bt 20 an d 25
 
-select * from employees where  age >=20 and age<=25;
+
 select * from employees where  age between 20 and 25;
 
 
@@ -542,12 +553,650 @@ select *,isnull(department) from employees;
  limit 1,1;
  
  
+-- 10
+ select * from employees;
+ select * from employees where  salary between 30000 and 50000;
+
+ select * from employees where city in ('delhi','mumbhi') and  age between 20 and 25  and experience_years>2;
+
+ select * from employees where city like 'd%' or city like 'b%' and  salary >50000 ;
+ 
+ 
+  select * from employees where (city like 'd%' || 'b%') and  salary >50000 ;
+  
+   
+  select * from employees where salary >50000 and city like 'd%' || 'b%' ;
+  
+  
+  
+  
+  -- 11
+  
+  -- trigger ,store procedures, views ,indexs ,mindow function, normlization ,
+  -- shortcut the create the table,joins,custom function , null function, how to drop primary and foreign key coloring in mysql
+  
+  -- is null operator
+  
+  
+  CREATE TABLE employees_null_practice (
+emp_id INT,
+emp_name VARCHAR(50),
+department VARCHAR(50),
+salary INT,
+bonus INT,
+manager_id INT
+);
+
+INSERT INTO employees_null_practice VALUES
+(1, 'Amit', 'IT', 50000, 5000, NULL),
+(2, 'Rahul', 'HR', NULL, 3000, 1),
+(3, 'Sita', NULL, 45000, NULL, 1),
+(4, 'Neha', 'Finance', 60000, NULL, 2),
+(5, 'Vikas', 'IT', NULL, 4000, 2),
+(6, 'Priya', NULL, 52000, 3500, 3),
+(7, 'Ankit', 'HR', 48000, NULL, NULL),
+(8, 'Pooja', 'Finance', NULL, 2000, 4),
+(9, 'Rohit', NULL, 55000, NULL, NULL),
+(10, 'Sneha', 'IT', NULL, NULL, 5);
+  
+  -- is null orperetor
+  select * ,isnull(salary) from employees_null_practice;
+  
+  /* here create a new col. which is providing the infomation or salary col. tha t does not exist here no*/
+  
+  
+  -- ifnull () and coalesce() fuctijons   
+  
+  -- i am to crate a nww col.whith the table which difene the salary col. 
+  -- and if the null values exist the salart col. than it replave the null by sum value which i difine
+  
+  
+  select *, ifnull(salary,bonus) from employees_null_practice;
+  
+  /* now i need the another col. whiach desc. the salary col. if the null exits there than replased by th e bonus col. 
+  and if the bonus concet the null than i goes another value and sach for multiple col. coalesce */
+  
+  
+    select *, coalesce(salary,bonus,20000) from employees_null_practice;
+
+-- 13
+
+-- Create Database
+CREATE DATABASE join_practice_db;
+USE join_practice_db;
+
+-- Customers Table
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(50),
+    city VARCHAR(50)
+);
+
+INSERT INTO customers VALUES
+(1,'Amit Sharma','Delhi'),
+(2,'Neha Verma','Mumbai'),
+(3,'Rahul Singh','Pune'),
+(4,'Priya Patel','Ahmedabad'),
+(5,'Karan Mehta','Delhi');
+
+-- Employees Table
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    department VARCHAR(50)
+);
+
+INSERT INTO employees VALUES
+(101,'Rohit Kumar','Sales'),
+(102,'Anjali Gupta','Sales'),
+(103,'Vikas Jain','Support');
+
+-- Products Table
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(50),
+    price INT
+);
+
+INSERT INTO products VALUES
+(201,'Laptop',60000),
+(202,'Mobile',20000),
+(203,'Headphones',2000),
+(204,'Keyboard',1500),
+(205,'Mouse',800);
+
+-- Orders Table
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    emp_id INT,
+    order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
+);
+
+INSERT INTO orders VALUES
+(301,1,101,'2025-01-10'),
+(302,2,102,'2025-01-12'),
+(303,3,101,'2025-01-15'),
+(304,1,103,'2025-01-18'),
+(305,5,102,'2025-01-20');
+
+-- Order Details Table
+CREATE TABLE order_details (
+    order_detail_id INT PRIMARY KEY,
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+INSERT INTO order_details VALUES
+(1,301,201,1),
+(2,301,203,2),
+(3,302,202,1),
+(4,303,205,3),
+(5,304,204,2),
+(6,305,201,1),
+(7,305,205,2);
+
+-- Example Multiple JOIN Query
+SELECT 
+    c.customer_name,
+    c.city,
+    o.order_id,
+    o.order_date,
+    e.emp_name AS handled_by,
+    p.product_name,
+    p.price,
+    od.quantity,
+    (p.price * od.quantity) AS total_price
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+JOIN employees e ON o.emp_id = e.emp_id
+JOIN order_details od ON o.order_id = od.order_id
+JOIN products p ON od.product_id = p.product_id;  
+
+
+drop database join_practice_db;
+
+-- JOIN PRACTICE DATASET
+
+
+
+
+
+CREATE DATABASE IF NOT EXISTS join_practice;
+USE join_practice;
+
+-- Customers table
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(50),
+    city VARCHAR(50),
+    email VARCHAR(100)
+);
+
+INSERT INTO customers VALUES
+(1,'Shubham','Delhi','shubham@gmail.com'),
+(2,'Amit','Mumbai','amit@gmail.com'),
+(3,'Neha','Pune','neha@gmail.com'),
+(4,'Rohit','Delhi','rohit@gmail.com'),
+(5,'Priya','Bangalore','priya@gmail.com');
+
+-- Categories table
+CREATE TABLE categories (
+    category_id INT PRIMARY KEY,
+    category_name VARCHAR(50)
+);
+
+INSERT INTO categories VALUES
+(1,'Electronics'),
+(2,'Clothing'),
+(3,'Books');
+
+-- Products table
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(50),
+    price DECIMAL(10,2),
+    category_id INT,
+    FOREIGN KEY (category_id) REFERENCES categories(category_id)
+);
+
+INSERT INTO products VALUES
+(101,'Laptop',50000,1),
+(102,'Mobile',20000,1),
+(103,'T-Shirt',500,2),
+(104,'Jeans',1200,2),
+(105,'SQL Book',700,3);
+
+-- Orders table
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+INSERT INTO orders VALUES
+(1001,1,'2024-01-10'),
+(1002,2,'2024-01-12'),
+(1003,1,'2024-01-15'),
+(1004,3,'2024-01-18'),
+(1005,5,'2024-01-20');
+
+-- Order Items table
+CREATE TABLE order_items (
+    order_item_id INT PRIMARY KEY,
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+INSERT INTO order_items VALUES
+(1,1001,101,1),
+(2,1001,103,2),
+(3,1002,102,1),
+(4,1003,105,3),
+(5,1004,104,1),
+(6,1005,101,1);
+
+-- SAMPLE JOIN QUERY
+SELECT customers.customer_name, products.product_name, order_items.quantity
+FROM customers
+JOIN orders ON customers.customer_id = orders.customer_id
+JOIN order_items ON orders.order_id = order_items.order_id
+JOIN products ON order_items.product_id = products.product_id;
+
+
+-- categories
+
+--  14
+-- cartision product 
+select * from customers cross join categories;
+
+-- natural join
+select * from customers natural join categories;
+
+select * from customers natural join orders;
+
+-- if that table not exits same col . in the table  query provide the cartison product 
+-- and may be table have same col. so that query return the inner join
+
+
+-- full join  
+select * from customers full  join orders;
+
+select * from customers as c full join orders as o on c.customer_id =o.customer_id;
+
+
+/* joins are used to combine the rows of the muyltiple table with help of common col. bt them
+it use for the merge operation bt the table 
+basic join are 7 types
+inner join , left, right, full outer join, self join, cross , natural join
+
+inner join- its provide the common part bt the 2 table  
+left join- left is equal to inner join + left table and unmatch of right table and
+            right able value unter the unmatch condition its provide with null
+right join- right is = to inner join + right table and unmatch of left table and 
+				where left table value is privete with null doing the unmatch row
+                
+cross join - it provide the cartision product under which be didnot define the common col.
+					beacuse if common  col. exete and doesnot exists bt the table its just provide 
+                    the carision product. means multipleing the combine each row ofthe one table with 
+                    all the rows of the under table.
+natural join - here also be not need describe the common col. beacuse the common col. is search by 
+						natural join it self 
+                        if the common col exist bt the table than if profoce the inner join and common 
+                        col. does not exist bt the table than it parform it means providethe carision product
+full outer join- it is the commsion of inner join + left table unmatch row the right table and the 
+							right table and unmatch row the left table
+self join -  a join with the table it self its the self join basically inner join
+ step to do it 
+ 1 create the douplecate of the table vertual with the help of alias (as) 
+ 2 here last ex. our task was to find the empl. name and manager name under which the employee works.alter
+ so i have create the 2 copys of emp. as e and m and providethe conndition that on the basis of e.manager_id = m.employess._id 
+ we are the create 2 col. first empl. name and the other manager
+ whan the common col. condition satifafis that time e table providethe emp. name and m table also provide the work as manager name 
+ */
+
+create database selfjoin;  
+use selfjoin;
+
+-- Create Employee table 
+CREATE TABLE employee ( employee_id INT PRIMARY
+KEY, employee_name VARCHAR(50), job_title VARCHAR(50), manager_id INT,
+salary INT );
+
+-- Insert data 
+INSERT INTO employee VALUES (1, 'Amit', 'CEO', NULL,
+100000); 
+INSERT INTO employee VALUES (2, 'Neha', 'Manager', 1, 75000);
+INSERT INTO employee VALUES (3, 'Raj', 'Manager', 1, 72000);
+ INSERT INTO
+employee VALUES (4, 'Priya', 'Team Lead', 2, 60000); 
+INSERT INTO
+employee VALUES (5, 'Vikas', 'Team Lead', 2, 58000); 
+INSERT INTO
+employee VALUES (6, 'Sneha', 'Developer', 4, 45000); 
+INSERT INTO
+employee VALUES (7, 'Arjun', 'Developer', 4, 43000); 
+INSERT INTO
+employee VALUES (8, 'Kavita', 'Developer', 5, 42000); 
+INSERT INTO
+employee VALUES (9, 'Rohit', 'Intern', 6, 25000); 
+INSERT INTO employee
+VALUES (10, 'Pooja', 'Intern', 7, 24000); 
+INSERT INTO employee VALUES
+(11, 'Manish', 'HR', 2, 50000); 
+INSERT INTO employee VALUES (12,
+'Simran', 'Accountant', 3, 52000);                          
+                    
+
+select * from employee;
+
+SELECT 
+    e.employee_name AS emp, m.employee_name AS manager
+FROM
+    employee AS e
+        JOIN
+    employee AS m ON e.manager_id = m.employee_id;
+
+
+-- window function  15
+
+
+
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    department VARCHAR(50),
+    salary INT
+);
+
+INSERT INTO employees (emp_id, emp_name, department, salary) VALUES
+(101, 'Amit', 'HR', 50000),
+(102, 'Riya', 'IT', 60000),
+(103, 'Sohan', 'IT', 60000),
+(104, 'Priya', 'Finance', 75000),
+(105, 'Rahul', 'HR', 50000),
+(106, 'Neha', 'Finance', 75000),
+(107, 'Karan', 'IT', 90000),
+(108, 'Simran', 'HR', 50000),
+(109, 'Vikas', 'Finance', 90000),
+(110, 'Anjali', 'IT', 60000),
+(111, 'Rohit', 'HR', 45000),
+(112, 'Pooja', 'Finance', 75000),
+(113, 'Arjun', 'IT', 90000),
+(114, 'Kavya', 'HR', 45000),
+(115, 'Manish', 'Finance', 60000);
+
+
+/* i want the complate data with the new col.which is tell the reainking on the basis salary col. the person 
+who is having highing salary and having highest rank    
+*/
+
+--- rank window function
+-- rank fun.
+
+select * ,rank() over(order by salary desc) as ranking from employees;
+select * ,rank() over(order by salary desc) as ranking from employees;
+-- skip the upcoming value
+-- dense rank
+select * ,dense_rank() over(order by salary desc) as ranking from employees;
+
+--- row number
+select * ,row_number() over(order by salary desc) as ranking from employees;
+
+--- ntile
+select * ,ntile(4) over(order by salary desc) as ranking from employees;
+
+--- value window function
+-- first_value
+select * ,first_value(salary) over(order by salary desc) as ranking from employees;
+
+-- last_value
+select * ,last_value(salary) over(order by salary desc) as ranking from employees;
+
+-- lead window function
+select * ,lead(salary) over(order by salary desc) as ranking from employees;
+
+-- lag fun.
+select * ,lag(salary) over(order by salary desc) as ranking from employees;
+
+--- aggreggate  window function
+-- sum  rolling sum
+select * ,sum(salary) over(order by salary desc) as ranking from employees;
+
+-- max
+select * ,max(salary) over(order by salary desc) as ranking from employees;
+  -- min
+select * ,min(salary) over(order by salary desc) as ranking from employees;
+-- count 
+select * ,count(salary) over(order by salary desc) as ranking from employees;
+-- avg
+select * ,avg(salary) over(order by salary desc) as ranking from employees;
+
+/* now we wnat to do the gruping and on the basis of dept grouping we obtaion the rollling sum of salary col. */
+select * ,sum(salary) over(partition by department order by salary desc) as ranking from employees;
+
+
+/* window fun. give the row  vias output 
+num. of input row = num. of output row
+if the over (is avalilble in the query ) it is window fun.
+rank fun. if the tipe of the value take place than it is skip the upcoming rows
+dencs rank- if same rank than upcoming rank doesnot skip 
+ntile - its divide the data inoto = num. of part what be define under the ntile
+row number - its provide the unqie identit num each row
+
+values window function
+first_value -and lastvalue the first value 
+and last value provide the ofthe data of the basis of partion
+
+the lead fun provideth e coming value where the lag fun. provide the last and privous values
+
+agg. win. fun.
+all aff .win .fun work on row level basis exp. if i perpome the min fun. 
+than its donest find the minmum value col. level it does row by row
+
+over () it is identit of the window fun.
+order by- in which col. we are to perfome the fun operation
+partionby - it is ontional but it is need the gourp by than we use it .alter
+
+*/
+
+
+--- 16
+
+create database er;
+use er;
+
+
+
+/*  
+you can create er diagram  both before and after database design but silate differnce 
+usealy enitty diagram is crate before the built the db it was a blue print of plan it has as dicity which enitty (table ) attribut (col.) , and relationship with exeted 
+with developers design the db str. using the diagram first after the db design er diagram can also we generated after the already create in thsi
+case the diagram is made from the existing  ftable it help to vistual the db and understand the database stucture  */
+
+
+ /* acid propertasqbal  */
+ 
+/* acit properties
+ 
+ 1.atomicity :- under 8  the saql tranjection wroks in two conditions only either to be completely pass to be completely fail
+ 
+ 2.consistency:- under 8 if i make any column with unique constant then it will be unique before and after the tranjection 
+ it is about data inrigrative voilnce     
+ 
+ 3.isolation:- under at one tranjection tacking placet then it does't effet the onther tranjection
+ 
+ 4.d for drubrility :if we are going to commit any tranjection then suppose at the point of augucation(contro+enter) just
+ after that exident the sysytem gfailuer tacke place then when be agin recollect the system show that  time
+ the query tranjection is completey done there but before pressing (contro+enter)  is the sysyemt falure tackimng palce then the system gone atomocity*/
+ show databases;
+ 
+ /*systemdefine object and database object/user define objects
+ 
+ sdo are thoese which are created by the system to improver it's wroking ex:when i witre show databses that time some databses are visable 
+ whichc i haven't careted also so these are sdo which improve the system working 
+ 
+ dbo are thoese which are created by user to  improve the suytem working 
+ 
+ ex:index ,views ,triggers , function ,store prossiger*/
+ 
+ 
+ /now i am to create a index for the salary column under the windo function databse/
+ 
+
+ 
+
  
 
 
+create index first_index
+on employees(salary);
+
+show indexes from employees;
+
+drop index first_index on employees;
+
+create index first_index
+on employees(department);
+
+show indexes from employees;
+
+drop index first_index on employees;
+
+
+/* index:- index is use to speeup the theory retrivale time it store the values with their location 
+
+in the real life we want to  read any topic ubder the book then we don't find the topic page by page we go index page and directly jump 
+to the perticular topic simillarly before creating the index  system has to scan each row but after creating the index system can directly jumped 
+to pertocular desier row but stil index is not perfor
+
+1.beacuse index covers the serve  sapace 
+2.it slow downs the dml operation ex:if we update in the index column then the update has to be done on the index also 
+so over all wrking increases and the time also increases
+
+index is perfored the larzer tables only because smaller tbale system can itself scan 
+
+for porimary,fogin ,and unique key under my sql the system create the index by on 
+
+on the basis structure the system is creatogries in two types
+1.betree index
+2.hash type index
+
+and the basis of storage it is classfiy in two types
+1.clusterd index 
+2.noneclusterd index
+
+ and index can be crtaeted on one and more column that time it is comp0ssed index*/
+
+
+
+create database primary_key;
+use primary_key;
+
+CREATE TABLE A(A_id int primary key,
+    A_named VARCHAR(50)
+    );
+CREATE TABLE B (
+    B_id int primary key,
+    B_name VARCHAR(50),
+    
+    A_id int,
+    
+    
+   foreign key (A_id) references A(A_id));
+   
+   
+  
+   desc A;
+   desc B;
+   
+    alter table A drop primary key
+    
+    /* how to drop foregin key*/
+ 
+ --- how to drop foreign key
+ 
+ 
+ 
+ 
+ 
+ --  458
+ 
+ create database primarykey;
+use primarykey;
+
+CREATE TABLE a(a_id int primary key,
+    a_named VARCHAR(50)
+    );
+CREATE TABLE b(
+    b_id int primary key,
+    b_name VARCHAR(50),
+    
+    b_id int,
+    
+    -- how to drop foreign key and primary key
+   foreign key (a_id) references a(a_id));
+   
+    
+    alter table a drop primary key;
+    
+     alter table b drop foreign key b_ibfk_1;
+     
+     desc a;
+    desc b;
+    
+    drop index a_id on b;
+    
+     desc a;
+    desc b;
+    
+    CREATE TABLE a(a_id int primary key,
+    a_named VARCHAR(50)
+    );
+    
+ insert into a values (1,"A");
+     
+     
+     /*the black color is represnt the column name ,table name, while the dark blue color represnt the resuve keywords the light 
+     blue clor represnt the comments and the orange and red color represnt the values*/
+     
+     
+      
+    create database shortcut;
+use shortcut;
+
+/*composit primary key:- */
+
+ insert into a values (1,"A");
+ 
+ 
+ INSERT INTO a VALUES (1, 'A');
+
+
+create table A(
+id int,
+course_id int,
+marks int,
+primary key (id,course_id));
+desc A;
+
+
+-- 458
 
 
 
 
 
-
+ 
+ 
+ 
+ 
