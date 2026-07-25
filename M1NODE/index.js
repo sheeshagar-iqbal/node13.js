@@ -12,10 +12,7 @@ app.use(express.urlencoded({extended:false}))
 
 
 
-app.post('/student', async (req,res)=>{
-    let data=  await student.create(req.body)
-    res.json(data)
-})
+// app.post('/student',)
 
 
 async function insert() {
@@ -31,6 +28,26 @@ async function insert() {
     
 }
 // app.post('/student', insert())
+
+app.delete('/student/data',async (req,res)=>{
+
+    let data =await student.deleteMany({})
+    res.json(data)
+
+})
+app.put('/student/updatemany',async (req,res)=>{
+
+    let data =await student.updateMany({"city":'bhp'},{$set:{'age':18}},{returnDocument:'after'})
+    res.json(data)
+
+})
+app.put('/student/:id',async (req,res)=>{
+
+    let data =await student.findByIdAndUpdate(req.params.id,req.body,{returnDocument:'after'})
+    res.json(data)
+
+})
+
 
 
 app.get('/student' ,async (req,res)=>{
@@ -68,12 +85,7 @@ app.get('/student/:id',async (req,res)=>{
 // })
 
 // delete all
-app.delete('/student/data',async (req,res)=>{
 
-    let data =await student.deleteMany({})
-    res.json(data)
-
-})
 
 app.listen(5000,()=>{
     console.log("server is running");
