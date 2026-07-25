@@ -1,7 +1,8 @@
 const express=require('express')
 
 const app=express()
-const student =require('./model/student.model')
+// const student =require('./model/student.model')
+const student =require('./model/studentmodel2')
 require('./config/db')
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
@@ -12,7 +13,11 @@ app.use(express.urlencoded({extended:false}))
 
 
 
-// app.post('/student',)
+
+app.post('/student',async (req,res)=>{
+    let data=  await student.create(req.body)
+    res.json(data)
+})
 
 
 async function insert() {
@@ -33,6 +38,7 @@ app.delete('/student/data',async (req,res)=>{
 
     let data =await student.deleteMany({})
     res.json(data)
+
 
 })
 app.put('/student/updatemany',async (req,res)=>{
