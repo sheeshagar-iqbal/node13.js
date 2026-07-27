@@ -14,7 +14,8 @@ const stSchema =new mongoose.Schema({
     },
     city:{
         type:String,
-        required:true
+        required:true,
+        default:"bhopal"
     },
     email:{
         type:String,

@@ -1,5 +1,5 @@
 const express=require('express')
-
+const cors =require('cors')
 const app=express()
 // const student =require('./model/student.model')
 const student =require('./model/studentmodel2')
@@ -8,7 +8,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
 
-
+app.use(cors())
 
 
 
@@ -57,7 +57,7 @@ app.put('/student/:id',async (req,res)=>{
 
 
 app.get('/student' ,async (req,res)=>{
-       let data= await student.find()
+       let data= await student.find() 
        res.json({message:"susccessfully",data})
 })
 
