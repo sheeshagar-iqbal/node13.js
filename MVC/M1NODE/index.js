@@ -34,13 +34,13 @@ async function insert() {
 }
 // app.post('/student', insert())
 
-app.delete('/student/data',async (req,res)=>{
+// app.delete('/student/data',async (req,res)=>{
 
-    let data =await student.deleteMany({})
-    res.json(data)
+//     let data =await student.deleteMany({})
+//     res.json(data)
 
 
-})
+// })
 app.put('/student/updatemany',async (req,res)=>{
 
     let data =await student.updateMany({"city":'bhp'},{$set:{'age':18}},{returnDocument:'after'})
@@ -84,11 +84,11 @@ app.get('/student/:id',async (req,res)=>{
 // })
 
 // by id
-// app.delete('/student/:id',async (req,res)=>{
-//     let data =await student.findByIdAndDelete(req.params.id)
-//     res.json(data)
+app.delete('/student/:id',async (req,res)=>{
+    let data =await student.findByIdAndDelete(req.params.id)
+    res.json(data)
 
-// })
+})
 
 // delete all
 
