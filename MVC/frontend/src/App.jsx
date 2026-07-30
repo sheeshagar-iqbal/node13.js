@@ -1,18 +1,31 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useState } from 'react'
+import Postdata from './Postdata'
+import Updatedata from './Updatedata'
 
 
 
 // crosss origin resouce shearing
 const App = () => {
   const [apidata , setapidata]=useState([])
+  const [userdata, setUserdata]=useState({})
+  const [show, setShow]=useState(false)
   function del(id){
     axios.delete(`http://localhost:5000/student/${id}`)
     .then(res=>alert('deleter'))
     .catch(err=>console.log('something wrong',err)
     )
   }
+
+  function update(id){
+    axios.get(`http://localhost:5000/student/${id}`)
+    .then(res=>setUserdata(res.data)   )
+    // .then(res=>console.log(res.data)       )
+    .catch(err=>console.log('something wrong',err)
+    )
+  }
+
   useEffect(()=>{
   axios.get("http://localhost:5000/student")
   .then(res=>setapidata(res.data.data))
@@ -21,6 +34,8 @@ const App = () => {
 },[del])
   return (
     <div>
+    <Postdata/>
+
       <table>
 
      <thead>
@@ -44,12 +59,19 @@ const App = () => {
         <td>{e.city}</td>
         <td>{e.contact}</td>
         <td onClick={()=>del(e._id)}>DELETE</td>
+        <td onClick={()=>(update(e._id),setShow(!show))}>Update</td>
       </tr>
 
         ))}
      </tbody>
         
-      </table></div>
+      </table>
+
+     {
+      show && <Updatedata data={userdata} />
+     }
+      
+      </div>
   )
 }
 
