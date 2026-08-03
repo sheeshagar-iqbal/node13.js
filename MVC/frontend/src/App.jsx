@@ -10,6 +10,7 @@ import Updatedata from './Updatedata'
 const App = () => {
   const [apidata , setapidata]=useState([])
   const [userdata, setUserdata]=useState({})
+  const [search,setSearch]=useState([])
   const [show, setShow]=useState(false)
   function del(id){
     axios.delete(`http://localhost:5000/student/${id}`)
@@ -24,6 +25,13 @@ const App = () => {
     // .then(res=>console.log(res.data)       )
     .catch(err=>console.log('something wrong',err)
     )
+  }
+  function hsearch(vl){
+    console.log(vl);
+    
+    axios.get(`http://localhost:5000/student/search?name=${vl}`)
+    .then(res=>setSearch(res.data))
+    .catch(err=>console.log('not search',err))
   }
 
   useEffect(()=>{
@@ -70,6 +78,22 @@ const App = () => {
      {
       show && <Updatedata data={userdata} />
      }
+
+
+
+     <h2>Search Data</h2>
+     <input type="text" onChange={(e)=>hsearch(e.target.value)} />
+
+
+    { search.map((e)=>(
+      <div>
+        <h2>{e.name}</h2>
+        <h2>{e.email}</h2>
+        <h2>{e.city}</h2>
+        <h2>{e.contact}</h2>
+        <h2>{e.age}</h2>
+      </div>
+     ))}
       
       </div>
   )

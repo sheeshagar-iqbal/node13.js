@@ -61,6 +61,23 @@ app.get('/student' ,async (req,res)=>{
        res.json({message:"susccessfully",data})
 })
 
+app.get('/student/search' ,async (req,res)=>{
+    let search = req.query.name
+    // console.log(search);
+    
+       let data= await student.find(
+        {
+            name:{
+                $regex:search,
+                $options:'i'
+            }
+        }
+       ) 
+       res.json(data)
+    //    res.send(search)
+
+})
+
 app.get('/student/:id',async (req,res)=>{
 
     let data =await student.findById(req.params.id)
