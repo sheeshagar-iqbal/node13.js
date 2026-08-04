@@ -1,19 +1,30 @@
 import React from 'react'
 import { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 const Postdata = () => {
     const [frmdata, setFrmdata]=useState({})
-
+    const navigate =useNavigate()
+    
     function hinput(e){
         let {name, value}=e.target 
         setFrmdata({...frmdata,[name]:value})
     }
 
     function submit(e){
-        // e.preventDefault()
-        axios.post("http://localhost:5000/student",frmdata)
-  .then(res=>alert('data insert successfully'))
-  .catch(e=>console.log(e))
+        e.preventDefault()
+        try {
+                axios.post("http://localhost:5000/student",frmdata)
+                .then(res=>alert('data insert successfully'))
+                navigate('/show')
+
+        } catch (error) {
+          console.log(error);
+          
+          
+        }
+  
+
         
     }
   return (
