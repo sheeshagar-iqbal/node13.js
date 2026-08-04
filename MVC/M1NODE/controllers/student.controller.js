@@ -81,4 +81,12 @@ const updatemany =async (req,res)=>{
     res.json(data)
 
 }
-module.exports ={createstudent,getstudent,getbyidstudent,deletestudent,searchstudent,updatebyid,updatemany}
+
+const sortstudent = async (req,res)=>{
+    let sort = req.query.name == 'asc'?1:-1
+    console.log(sort);
+    let data = await student.find().sort({name:sort})
+    res.json(data)
+    
+}
+module.exports ={createstudent,getstudent,getbyidstudent,deletestudent,searchstudent,updatebyid,updatemany, sortstudent}
