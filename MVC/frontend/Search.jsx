@@ -10,9 +10,9 @@ const Search = () => {
   function hsearch(vl){
     console.log(vl);
     
-    axios.get(`http://localhost:5000/student/search?name=${vl}`)
+    axios.get(`http://localhost:5000/student/search/s?name=${vl}`)
     .then(res=>setSearch(res.data))
-    .catch(err=>console.log('not search',err))
+    .catch((err)=>console.log('not search',err))
   }
 
   return (

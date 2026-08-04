@@ -12,6 +12,74 @@ app.use(cors())
 
 
 
+app.get('/student/search/s' ,async (req,res)=>{
+    let search = req.query.name
+    // console.log(search);
+    
+       let data= await student.find(
+        {
+          $or:[ { name:{
+                $regex:search,
+                $options:'i'
+            }},
+            {age:{
+                $regex:search,
+                $options:"i"
+            }}
+        ]
+        }
+       ) 
+       res.json(data)
+    //    res.send(search)
+
+})
+
+
+
+
+
+// app.get('/student/search/s' ,async (req,res)=>{
+//     let search = req.query.name
+//     console.log(search);
+    
+//       let data =await student.find({
+//         $or:[
+
+//             {name:{$regex:search, $options:"i"}},
+//             {age:{$regex:search, $options:"i"}},
+//             {contact:{$regex:search, $options:"i"}}
+//         ]
+//       })
+//        res.json(data)
+//     //    res.send(search)
+
+
+
+//     //  let {name}=req.query;
+//     // stmodel.find({
+//     //     $or: [
+//     //    {name : { $regex:name,$options:'i' }},
+//     //    {email: { $regex:name,$options:'i' }},
+//     //    {connect: { $regex:name,$options:'i' }},
+//     //    {city: { $regex:name,$options:'i' }}
+
+
+
+       
+
+//     //        ]
+       
+//     // })
+//     // .then((data)=>{
+//     //     res.json(data)
+//     // })
+//     // .catch((err)=>{
+//     //     res.json({message:'search error',err})
+
+//     // })
+
+
+// })
 
 
 app.post('/student',async (req,res)=>{
@@ -61,22 +129,25 @@ app.get('/student' ,async (req,res)=>{
        res.json({message:"susccessfully",data})
 })
 
-app.get('/student/search' ,async (req,res)=>{
-    let search = req.query.name
-    // console.log(search);
+// app.get('/student/search/s' ,async (req,res)=>{
+//     let search = req.query.name
+//     // console.log(search);
     
-       let data= await student.find(
-        {
-            name:{
-                $regex:search,
-                $options:'i'
-            }
-        }
-       ) 
-       res.json(data)
-    //    res.send(search)
+//        let data= await student.find(
+//         {
+//             name:{
+//                 $regex:search,
+//                 $options:'i'
+//             }
+//         }
+//        ) 
+//        res.json(data)
+//     //    res.send(search)
 
-})
+// })
+
+
+
 
 app.get('/student/:id',async (req,res)=>{
 
