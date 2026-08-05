@@ -16,7 +16,9 @@ const Show = () => {
 
     function del(id){
     axios.delete(`http://localhost:5000/student/${id}`)
-    .then(res=>alert('deleter'))
+    .then(res=>{alert('deleter')
+      getstudent()
+    })
     .catch(err=>console.log('something wrong',err)
     )
   }
@@ -32,30 +34,59 @@ const Show = () => {
   function sortdata(s){
     // console.log(s);
   axios.get(`http://localhost:5000/student/sort?name=${s}`)
-  .then(res=>setSorted(res.data)  )
+  .then(res=>{
+    setapidata(res.data)
+    console.log(res.data);
+    
+  }  )
   .catch(e=>console.log(e))
     
   }
 
+   function filterdata(s){
+    // console.log(s);
+  axios.get(`http://localhost:5000/student/filtercity?city=${s}`)
+  .then(res=>{
+    setapidata(res.data)
+    console.log(res.data);
+    
+  }  )
+  .catch(e=>console.log(e))
+    
+  }
 
-  useEffect(()=>{
-  axios.get("http://localhost:5000/student")
+  function getstudent(){
+          axios.get("http://localhost:5000/student")
   .then(res=>setapidata(res.data.data))
   .catch(e=>console.log(e))
+  }
+
+
+  useEffect(()=>{
+  getstudent()
   
-},[del])
+},[])
 
   return (
     <>
     <h1>show info</h1>
     {/* <button onClick={()=>useNavigate('/search')}>search</button> */}
     <button onClick={()=>navigate('/search')}>search</button>
-    <select name="" id="" onClick={(e)=>sortdata(e.target.value)}>
-      <option value="asc">Ascending</option>
-      <option value="desc">Descending</option>
+    <select name="" id="" onChange={(e)=>sortdata(e.target.value)}>
+      <option value="">select_sorting</option>
+      <option value="asc">a-z</option>
+      <option value="desc">z-a</option>
     </select>
 
-          <table>
+    <select name="" id="" onChange={(e)=>filterdata(e.target.value)}>
+      <option value="">select_filtering</option>
+      <option value="bhopal">bhopal</option>
+      <option value="indore">indore</option>
+      <option value="delhi">delhi</option>
+      <option value="guna">guna</option>
+    </select>
+
+          <table border=''>
     
      <thead>
        <tr>
@@ -65,6 +96,8 @@ const Show = () => {
         <th>City</th>
         <th>Email</th>
         <th>contact</th>
+        <th>update</th>
+        <th>delete</th>
       </tr>
      </thead>
      <tbody>
@@ -93,7 +126,7 @@ const Show = () => {
 
 
 
-     <h2>sort data</h2>
+     {/* <h2>sort data</h2>
       {sorted.map((e)=>(
       <tr key={e._id}>
       
@@ -107,7 +140,7 @@ const Show = () => {
         <td onClick={()=>(update(e._id),setShow(!show))}>Update</td>
       </tr>
 
-        ))}
+        ))} */}
      
     </>
   )

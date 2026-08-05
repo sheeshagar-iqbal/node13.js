@@ -1,11 +1,12 @@
 const express = require('express')
-const { createstudent, getstudent, getbyidstudent, deletestudent, searchstudent, updatebyid, updatemany, sortstudent } = require('../controllers/student.controller')
+const { createstudent, getstudent, getbyidstudent, deletestudent, searchstudent, updatebyid, updatemany, sortstudent, filterstudent } = require('../controllers/student.controller')
 const router = express.Router()
 
 
 router.post('/student',createstudent)
 router.get('/student',getstudent)
 router.get('/student/sort',sortstudent)
+router.get('/student/filtercity',filterstudent)
 
 router.get('/student/:id',getbyidstudent)
 router.delete('/student/:id',deletestudent)

@@ -89,4 +89,18 @@ const sortstudent = async (req,res)=>{
     res.json(data)
     
 }
-module.exports ={createstudent,getstudent,getbyidstudent,deletestudent,searchstudent,updatebyid,updatemany, sortstudent}
+
+const filterstudent = async (req,res)=>{
+    let sort = req.query.city
+    let data 
+    console.log(sort);
+    if(!(sort=="")){
+     data = await student.find({city:sort})
+
+    }else{
+     data = await student.find()
+    }
+    res.json(data)
+    
+}
+module.exports ={createstudent,getstudent,getbyidstudent,deletestudent,searchstudent,updatebyid,updatemany, sortstudent,filterstudent}
