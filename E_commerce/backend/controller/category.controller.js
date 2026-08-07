@@ -9,4 +9,12 @@ const retriveCategory= async (req,res)=>{
      let data =await categorymodel.find()
     res.json(data)
 }
-module.exports = {createCategory,retriveCategory}
+const updateCategory= async (req,res)=>{
+     let data =await categorymodel.findByIdAndUpdate(req.params.id,req.body)
+    res.json(data)
+}
+const deleteCategory= async (req,res)=>{
+     let data =await categorymodel.findByIdAndDelete(req.params.id)
+    res.json(data)
+}
+module.exports = {createCategory,retriveCategory,updateCategory,deleteCategory}
