@@ -5,8 +5,10 @@ const createProduct= async (req,res)=>{
     res.json(data)
 }
 const retriveProduct= async (req,res)=>{
-     let data =await Productmodel.find()
-    res.json(data)
+     let data =await Productmodel
+      .find().populate("category");
+
+    res.json(data);
 }
 
 module.exports = {createProduct,retriveProduct}

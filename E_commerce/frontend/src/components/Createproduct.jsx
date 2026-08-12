@@ -2,10 +2,12 @@ import axios from 'axios'
 import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Createproduct = () => {
     const [category,setCategory]=useState([])
     const [formdata,setFormdata]=useState({})
+    const navigate =useNavigate()
     function insertchnage(e){
                 setFormdata({...formdata,[e.target.name]:e.target.value})
     }
@@ -13,12 +15,13 @@ const Createproduct = () => {
         e.preventDefault()
         axios.post('http://localhost:5000/ecommerce/product',formdata)
         .then(()=>alert('inserted data'))
-        .then(err=>console.log(err))
+        .catch(err=>console.log(err))
+        navigate('/showproduct')
     }
     function getcategory(){
         axios.get('http://localhost:5000/ecommerce/category')
         .then(res=>setCategory(res.data))
-        .then(err=>console.log(err))
+        .catch(err=>console.log(err))
     }
     useEffect(()=>{
          getcategory()
