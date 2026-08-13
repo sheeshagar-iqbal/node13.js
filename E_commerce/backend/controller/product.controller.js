@@ -11,4 +11,14 @@ const retriveProduct= async (req,res)=>{
     res.json(data);
 }
 
-module.exports = {createProduct,retriveProduct}
+const retriveProductbycategory= async (req,res)=>{
+    let cate =req.query.category
+    // console.log(cate);
+    
+     let data =await Productmodel
+      .find({category:cate}).populate("category");
+
+    res.json(data);
+}
+
+module.exports = {createProduct,retriveProduct,retriveProductbycategory}
