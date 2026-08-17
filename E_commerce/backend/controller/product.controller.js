@@ -35,4 +35,9 @@ const getbyidProduct= async (req,res)=>{
 
     res.json(data);
 }
-module.exports = {createProduct,retriveProduct,retriveProductbycategory, deleteProduct,getbyidProduct}
+
+const putProduct= async (req,res)=>{
+     let data =await Productmodel.findByIdAndUpdate(req.params.id,req.body,{returnDocument:'after'})
+    res.json(data)
+}
+module.exports = {createProduct,retriveProduct,retriveProductbycategory, deleteProduct,getbyidProduct,putProduct}

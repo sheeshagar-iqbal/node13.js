@@ -15,8 +15,8 @@ const Updateproduct = () => {
     }
     function productsumbit(e){
         e.preventDefault()
-        axios.post('http://localhost:5000/ecommerce/product',formdata)
-        .then(()=>alert('inserted data'))
+        axios.put(`http://localhost:5000/ecommerce/product/${id}`,formdata)
+        .then(()=>alert('updated data'))
         .catch(err=>console.log(err))
         navigate('/showproduct')
     }
