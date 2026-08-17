@@ -21,4 +21,18 @@ const retriveProductbycategory= async (req,res)=>{
     res.json(data);
 }
 
-module.exports = {createProduct,retriveProduct,retriveProductbycategory}
+
+const deleteProduct= async (req,res)=>{
+
+     let data =await Productmodel.findByIdAndDelete(req.params.id);
+
+    res.json(data);
+}
+
+const getbyidProduct= async (req,res)=>{
+
+     let data =await Productmodel.findById(req.params.id);
+
+    res.json(data);
+}
+module.exports = {createProduct,retriveProduct,retriveProductbycategory, deleteProduct,getbyidProduct}
