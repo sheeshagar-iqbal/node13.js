@@ -1,0 +1,8 @@
+const express = require('express')
+const imgrouter = require('./router/image.router')
+const app = express()
+const cors = require("cors")
+require("./config/db")
+app.use(cors())
+app.use(imgrouter)
+app.listen(5000, ()=>console.log('server'))
