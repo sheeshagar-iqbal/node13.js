@@ -1,0 +1,8 @@
+const express = require("express")
+const routermulter = require("./router/multer.router")
+const app = express()
+require("dotenv").config()
+require("./config/db")
+app.use(express.json())
+app.use(routermulter)
+app.listen(process.env.PORT,()=>console.log(`SERVER SI RUNNING THIS ${process.env.PORT}`))

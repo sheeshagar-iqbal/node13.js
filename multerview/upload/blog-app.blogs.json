@@ -1,0 +1,120 @@
+[{
+  "_id": {
+    "$oid": "6a7d55293fe7b9368f41fdde"
+  },
+  "title": "Blanditiis do dolor ",
+  "description": "Tempor non dolore ut",
+  "img": "https://tse3.mm.bing.net/th/id/OIP.i-umEM7tpKdQON0Tz09HygHaEK?r=0&pid=Api&P=0&h=180",
+  "category": "Fashion",
+  "username": "rani",
+  "nowdate": "Thu Aug 13 2026 10:49:16 GMT+0530 (India Standard Time)",
+  "user": {
+    "$oid": "6a7b2f2472400527ebf963a2"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a7d643466d02a7f4dae28c3"
+  },
+  "title": "Dolorum tenetur labo",
+  "description": "Suscipit quae consec",
+  "img": "https://tse2.mm.bing.net/th/id/OIP.KMhmw6K501HDJqwrUP801QHaEK?r=0&pid=Api&P=0&h=180",
+  "category": "Sports",
+  "username": "rani",
+  "nowdate": "2026-08-13T06:29:07.980Z",
+  "user": {
+    "$oid": "6a7b2f2472400527ebf963a2"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a7d9cd67efee17d1d811470"
+  },
+  "title": "tech",
+  "description": "We recommend reading this tutorial, in the sequence listed in the menu.\n\nIf you have a large screen, the menu will always be present on the left.\n\nIf you have a small screen, open the menu by clicking the top menu sign",
+  "img": "https://tse1.mm.bing.net/th/id/OIP.DniMq4emsUEgeOzKTNzV5gHaEK?pid=Api",
+  "category": "Tech",
+  "username": "rani",
+  "nowdate": "2026-08-13T10:30:46.094Z",
+  "user": {
+    "$oid": "6a7b2f2472400527ebf963a2"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a7d9cee7efee17d1d811472"
+  },
+  "title": "tech",
+  "description": "We recommend reading this tutorial, in the sequence listed in the menu.\n\nIf you have a large screen, the menu will always be present on the left.\n\nIf you have a small screen, open the menu by clicking the top menu sign",
+  "img": "https://tse4.mm.bing.net/th/id/OIP.QA89M8S8VbFkDIFbNbeI8AHaD4?r=0&pid=Api&P=0&h=180",
+  "category": "Sports",
+  "username": "rani",
+  "nowdate": "2026-08-13T10:31:10.511Z",
+  "user": {
+    "$oid": "6a7b2f2472400527ebf963a2"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a7d9d6d7efee17d1d811476"
+  },
+  "title": "house hold",
+  "description": "Commonly Asked Questions\nHow do I get JavaScript?\nWhere can I download JavaScript?\nIs JavaScript Free?\nYou don't have to get or download JavaScript.\n\nJavaScript is already running in your browser on your computer, on your tablet, and on your smart-phone.\n\nJavaScript is free to use for everyone.",
+  "img": "https://tse4.mm.bing.net/th/id/OIP.n1suU5rmygD_nnJiSKpsdwHaEK?r=0&pid=Api&P=0&h=180",
+  "category": "Tech",
+  "username": "rani",
+  "nowdate": "2026-08-13T10:33:17.502Z",
+  "user": {
+    "$oid": "6a7b2f2472400527ebf963a2"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a806a19a349ae955c4e61b9"
+  },
+  "title": "useeffect",
+  "description": "But wait!! It keeps counting even though it should only count once!\n\nuseEffect runs on every render. That means that when the count changes, a render happens, which then triggers another effect.\n\nThis is not what we want. There are several ways to control when side effects run.\n\nWe should always include the second parameter which accepts an array. We can optionally pass dependencies to useEffect in this array.",
+  "img": "https://tse2.mm.bing.net/th/id/OIP.IGWfpT_wKB3AyT-TAoNCbgHaEK?r=0&pid=Api&P=0&h=180",
+  "category": "Tech",
+  "username": "neha",
+  "nowdate": "2026-08-16T08:04:44.806Z",
+  "user": {
+    "$oid": "6a7c493b28dc3dd98d674b76"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a81da6e4f8b090f2d853a86"
+  },
+  "title": "Est id tempora volu",
+  "description": "Aliquam nobis et non",
+  "img": "https://tse3.mm.bing.net/th/id/OIP.lp8L3TmZLN95qMztNKNAhQHaDp?r=0&pid=Api&P=0&h=180",
+  "category": "Music",
+  "username": "kajal",
+  "nowdate": "2026-08-16T15:42:38.186Z",
+  "user": {
+    "$oid": "6a7d1e3b3e23e9e23021ecdf"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a81dab04f8b090f2d853a89"
+  },
+  "title": "Qui in dolor culpa ",
+  "description": "Minim vel excepteur ",
+  "img": "https://tse3.mm.bing.net/th/id/OIP.lp8L3TmZLN95qMztNKNAhQHaDp?r=0&pid=Api&P=0&h=180",
+  "category": "Music",
+  "username": "kajal",
+  "nowdate": "2026-08-16T15:43:44.655Z",
+  "user": {
+    "$oid": "6a7d1e3b3e23e9e23021ecdf"
+  },
+  "__v": 0
+}]
