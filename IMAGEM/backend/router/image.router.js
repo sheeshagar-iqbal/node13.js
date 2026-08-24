@@ -14,6 +14,6 @@ router.get ('/imgupload',imgretrive)
 router.post("/",upload.single("image"),postdata)
 router.get("/",getdata)
 router.get("/:id",getsingledata)
-router.put("/:id",putdata)
+router.put("/:id",upload.single("image"),putdata)
 router.delete("/:id",deletedata)
 module.exports=router
