@@ -50,7 +50,7 @@ const postdata = async (req, res) => {
   try {
     const data = await imgmodel.create({
       ...req.body,
-    //   image: req.file ? req.file.filename : ""
+      image: req.file ? req.file.filename : ""
     });
 
     res.status(201).json(data);
