@@ -5,7 +5,8 @@ const userlogin = (req,res)=>{
 
     if(email=="q@gmail.com" && password =="123"){
         let token =jwt.sign({
-            userId:"213"
+            userId:"213",
+            role:"user"
         },
         "secretkey"
     )
@@ -15,4 +16,12 @@ const userlogin = (req,res)=>{
     }
 }
 
-module.exports ={userlogin}
+
+const profile = (req,res)=>{
+    res.json({"message":"welcome"})
+}
+
+const contact = (req,res)=>{
+    res.json({"message":"contact"})
+}
+module.exports ={userlogin,profile,contact}
