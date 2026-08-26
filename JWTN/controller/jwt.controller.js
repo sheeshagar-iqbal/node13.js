@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 const userlogin = (req,res)=>{
     const {email,password} =req.body
@@ -24,4 +25,14 @@ const profile = (req,res)=>{
 const contact = (req,res)=>{
     res.json({"message":"contact"})
 }
-module.exports ={userlogin,profile,contact}
+
+
+
+const userPass =async(req,res)=>{
+    const {email,password}=req.body
+    const hashpass =await bcrypt.hash(password,10)
+    console.log(hashpass);
+    res.json(hashpass)
+    
+}
+module.exports ={userlogin,profile,contact,userPass}

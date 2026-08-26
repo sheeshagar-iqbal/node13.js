@@ -22,4 +22,6 @@ const usermiddle = (req,res,next)=>{
     
 }
 
+
+
 module.exports ={auth,usermiddle}
